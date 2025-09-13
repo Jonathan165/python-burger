@@ -1,30 +1,34 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ restaurante }} - Início</title>
-</head>
-<body>
-    <!-- Usando as variáveis enviadas pela cozinha -->
-    <h1>🍔 Bem-vindos ao {{ restaurante }}! 🍔</h1>
-    <h2>O melhor hambúrguer da linguagem {{ especialidade }}!</h2>
+<!-- Herda do template base -->
+{% extends 'cardapio/base.html' %}
+
+<!-- Personaliza o título da página -->
+{% block titulo %}{{ restaurante }} - Início{% endblock %}
+
+<!-- Personaliza o conteúdo principal -->
+{% block conteudo %}
+    <h2>Bem-vindos ao nosso restaurante!</h2>
     
-    <p>Olá! Eu sou o {{ atendente }}, atendente da entrada.</p>
+    <p>Olá! Eu sou o {{ atendente|upper }}, atendente da entrada.</p>
     <p>Aqui você encontra os hambúrguers mais deliciosos do mundo da {{ especialidade }}!</p>
     
-<!-- Adicione este bloco antes da lista de links -->
     <h3>🌟 Destaques de Hoje:</h3>
+    <p>Temos {{ destaques|length }} hambúrguers especiais hoje!</p>
     <ul>
         {% for hamburguer in destaques %}
             <li>🍔 {{ hamburguer }}</li>
         {% endfor %}
     </ul>
 
-    <ul>
-        <li><a href="/cardapio/">🍔 Ver Cardápio</a></li>
-        <li><a href="/sobre/">📖 Nossa História</a></li>
-        <li><a href="/contato/">📞 Contato</a></li>
-    </ul>
-</body>
-</html>
+    <h4>🎉 Promoção de Hoje:</h4>
+<p>{{ promocao_hoje|default:"Nenhuma promoção especial hoje, mas nossos hambúrguers sempre valem a pena!" }}</p>
+
+    {% if aberto %}
+        <p style="color: green; font-weight: bold;">
+            ✅ Estamos ABERTOS! Venha nos visitar!
+        </p>
+    {% else %}
+        <p style="color: red; font-weight: bold;">
+            ❌ Desculpe, estamos FECHADOS! Voltamos amanhã.
+        </p>
+    {% endif %}
+{% endblock %}
